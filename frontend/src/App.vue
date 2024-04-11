@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from "vue"
+import { captureAudio } from "../lib";
 
 // Task
 // [X] - Screenshot a video stream and show it in img element in screen'
@@ -15,23 +16,24 @@ import { RecordRTCPromisesHandler, StereoAudioRecorder } from "recordrtc";
 let mediaStream;
 const mediaStreamElm = ref(null);
 const screenshotElm = ref(null);
+const audioCtx = new AudioContext();
 
-const handleDataAvailable = async (event) => {
-  if (event.size > 0) {
-    const base64 = await blobToBase64(event);
+// const handleDataAvailable = async (event) => {
+//   if (event.size > 0) {
+//     const base64 = await blobToBase64(event);
 
-    const response = await fetch('http://localhost:8000/whisper', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ chunk: base64 })
-    });
+//     const response = await fetch('http://localhost:8000/whisper', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json'
+//       },
+//       body: JSON.stringify({ chunk: base64 })
+//     });
 
-    const data = await response.json();
-    console.log('Data', data);
-  }
-};
+//     const data = await response.json();
+//     console.log('Data', data);
+//   }
+// };
 
 function blobToBase64(blob) {
   return new Promise((resolve, reject) => {
@@ -72,37 +74,53 @@ const takePhoto = async () => {
   return base64
 }
 
+const onAudio = async (base64) => {
+  const response = await fetch('http://localhost:8000/whisper', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ chunk: base64 })
+  });
+
+  const data = await response.json();
+  console.log('Data', data);
+}
+
 const handleScreenshot = async () => {
   const bitmap = await screenshot();
   screenshotElm.value.src = bitMapToBase64(bitmap);
 };
 
 const handleGetUserMedia = async () => {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({
-      video: false,
-      audio: true
-    });
+  // try {
+  const stream = await navigator.mediaDevices.getUserMedia({
+    video: false,
+    audio: true
+  });
 
-    mediaStream = stream;
-    mediaStreamElm.value.srcObject = stream;
+  mediaStream = stream;
+  mediaStreamElm.value.srcObject = stream;
+  const stopCaptureAudio = captureAudio({ stream, onAudio });
+  // await detectSpeechEnd()
+  // console.log('Stop Capture Audio', stopCaptureAudio);
 
-    let recorder = new RecordRTCPromisesHandler(stream, {
-      type: 'audio',
-      recorderType: StereoAudioRecorder,
-      mimeType: 'audio/wav',
-      timeSlice: 500,
-      desiredSampRate: 16000,
-      numberOfAudioChannels: 1,
-      ondataavailable: handleDataAvailable
-    });
+  // let recorder = new RecordRTCPromisesHandler(stream, {
+  //   type: 'audio',
+  //   recorderType: StereoAudioRecorder,
+  //   mimeType: 'audio/wav',
+  //   timeSlice: 500,
+  //   desiredSampRate: 16000,
+  //   numberOfAudioChannels: 1,
+  //   ondataavailable: handleDataAvailable
+  // });
 
-    recorder.startRecording();
+  // recorder.startRecording();
 
-  } catch (error) {
-    console.error(error);
-  }
-};
+  // } catch (error) {
+  // console.error(error);
+}
+// };
 </script>
 
 <template>
