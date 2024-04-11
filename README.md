@@ -30,6 +30,7 @@ Topics summary
 - Batch Processing
 - Asyncio
 - Aiohttp
+- Server Architecture
 
 ## TODO
 
