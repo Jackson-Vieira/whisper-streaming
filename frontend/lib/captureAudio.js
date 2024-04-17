@@ -31,7 +31,7 @@ async function blobsToBase64(blobs) {
 export function captureAudio({
   stream,
   onAudio,
-  minChunkDuration = 5_000,
+  minChunkDuration = 2000,
 }) {
   let startedAt;
   let chunks = [];
@@ -71,16 +71,16 @@ export function captureAudio({
     });
   };
 
-  const stopSpeechDetect = detectSpeechEnd({
-    onSpeechStart() {
-      console.info("[Speech] started.");
-      startRecord();
-    },
-    onSpeechEnd() {
-      console.info("[Speech] end.");
-      setTimeout(stopRecord, 30);
-    },
-  });
+  const stopSpeechDetect = startRecord;
+  // onSpeechStart() {
+  //   console.info("[Speech] started.");
+  //   startRecord();
+  // },
+  // onSpeechEnd() {
+  //   console.info("[Speech] end.");
+  //   setTimeout(stopRecord, 30);
+  // },
+  // });
 
   return () => {
     stopSpeechDetect();
