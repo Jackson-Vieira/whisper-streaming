@@ -33,6 +33,8 @@ Topics summary
 - Server Architecture
 
 ## TODO
+- [] Finish V1
+- [] Pitch presentation
 
 ## FEATURES
 
