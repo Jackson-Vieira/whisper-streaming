@@ -60,3 +60,13 @@ Nesta seção, analisaremos os dados da pesquisa de viabilidade dos serviços de
 
 
 ## Arquitetura planejada whisper live (colocar aqui)
+
+
+## References
+
+1. [Need for Speed: How Transcribe Turbocharged Whisper for Real-time Conversations](https://medium.com/dsaid-govtech/need-for-speed-how-transcribe-turbocharged-whisper-for-real-time-conversations-9325df6c9ec8)
+
+2. [GitHub - WhisperLive Server.py](https://github.com/collabora/WhisperLive/blob/main/whisper_live/server.py)
+
+3. [Best Speech-to-Text APIs - Deepgram](https://deepgram.com/learn/best-speech-to-text-apis)
+
