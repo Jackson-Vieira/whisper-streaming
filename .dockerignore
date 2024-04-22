@@ -1,6 +1,6 @@
-venv
+venv/
 .env
 .env.example
-models
-poc
-backup
+models/
+poc/
+backup/
