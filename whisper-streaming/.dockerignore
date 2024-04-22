@@ -1,8 +1,0 @@
-*.env
-*.env.*
-env.*
-
-venv/
-models/
-poc/
-vue-example/

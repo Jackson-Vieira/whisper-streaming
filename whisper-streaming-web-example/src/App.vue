@@ -75,7 +75,7 @@ const takePhoto = async () => {
 }
 
 const onAudio = async (base64) => {
-  const response = await fetch('http://localhost:8000/whisper', {
+  const response = await fetch('http://localhost:8080/whisper', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
