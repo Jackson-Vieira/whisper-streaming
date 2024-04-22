@@ -18,11 +18,12 @@ from fastapi.middleware.cors import CORSMiddleware
 # logger = logging.getLogger(__name__)
 # logger.setLevel(logging.DEBUG)
 
+# TODO: change this for envs
 SERVER_PORT: Final = 8000
 MODEL_SIZE: Final = "tiny"
 VAD_FILTER: Final = True
 DOWNLOAD_ROOT: Final = "./models"
-CORS_ORIGINS: Final = ["http://localhost:5173"]
+CORS_ORIGINS: Final = ["https://nadictalk.nadic.com.br"]
 
 
 model = WhisperModel(
